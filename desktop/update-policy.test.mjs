@@ -6,10 +6,10 @@ import {
   resolveUpdateSupport,
 } from "./update-policy.mjs";
 
-test("预览版默认自动检查预览通道", () => {
+test("新安装默认自动检查稳定通道", () => {
   assert.deepEqual(normalizeUpdatePreferences(), {
     autoCheck: true,
-    channel: "preview",
+    channel: "stable",
   });
 });
 
@@ -20,8 +20,14 @@ test("更新偏好只接受明确的关闭与稳定通道", () => {
   );
   assert.deepEqual(
     normalizeUpdatePreferences({ autoCheck: "no", channel: "nightly" }),
-    { autoCheck: true, channel: "preview" },
+    { autoCheck: true, channel: "stable" },
   );
+});
+
+test("保留用户主动选择的测试通道", () => {
+  assert.deepEqual(normalizeUpdatePreferences({ channel: "preview" }), {
+    autoCheck: true, channel: "preview",
+  });
 });
 
 test("当前版本只在已打包的 Windows 应用中启用自动更新", () => {

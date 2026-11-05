@@ -5,17 +5,22 @@ import {
   resolveUpdateSupport,
 } from "./update-policy.mjs";
 
-const { autoUpdater } = electronUpdater;
 const CHECK_INTERVAL_MS = 6 * 60 * 60 * 1000;
 const INITIAL_CHECK_DELAY_MS = 15 * 1000;
 
-export function createUpdateManager({ app, ipcMain, isDevelopment, getWindow, beforeInstall }) {
+export function createUpdateManager({ app, ipcMain, isDevelopment, getWindow, beforeInstall,
+  updater = electronUpdater.autoUpdater, platform = process.platform }) {
+  const autoUpdater = updater;
   const support = resolveUpdateSupport({
     isDevelopment,
     isPackaged: app.isPackaged,
-    platform: process.platform,
+    platform,
   });
   let preferences = normalizeUpdatePreferences();
+  let operation = null;
+  let operationChannel = preferences.channel;
+  let queuedCheck = false;
+  let downloadedChannel = null;
   let initialTimer = null;
   let intervalTimer = null;
   let state = {
@@ -38,32 +43,62 @@ export function createUpdateManager({ app, ipcMain, isDevelopment, getWindow, be
     return state;
   };
 
-  const fail = (error) =>
+  const acceptsEvent = () => operation !== null && !queuedCheck &&
+    operationChannel === preferences.channel;
+  const fail = (error) => {
+    if (!acceptsEvent()) return;
     sendState({
       status: "error",
       message: updateErrorMessage(error),
       checkedAt: new Date().toISOString(),
     });
+  };
+
+  const resetCandidate = () => {
+    downloadedChannel = null;
+    return sendState({ status: support.supported ? "idle" : "unsupported",
+      availableVersion: "", percent: 0, transferred: 0, total: 0, message: support.reason });
+  };
+
+  const finishOperation = async () => {
+    operation = null;
+    if (queuedCheck) {
+      queuedCheck = false;
+      resetCandidate();
+      await checkForUpdates(true);
+    }
+  };
 
   const checkForUpdates = async (manual = false) => {
     if (!support.supported) return sendState({ manual, message: support.reason });
-    if (["checking", "downloading"].includes(state.status)) return state;
+    if (operation) return state;
+    operation = "check";
+    operationChannel = preferences.channel;
+    downloadedChannel = null;
+    autoUpdater.allowPrerelease = operationChannel === "preview";
+    autoUpdater.allowDowngrade = false;
     sendState({ status: "checking", message: "", manual });
     try {
       await autoUpdater.checkForUpdates();
     } catch (error) {
       fail(error);
+    } finally {
+      await finishOperation();
     }
     return state;
   };
 
   const downloadUpdate = async () => {
-    if (!support.supported || state.status !== "available") return state;
+    if (!support.supported || operation || state.status !== "available" ||
+        operationChannel !== preferences.channel) return state;
+    operation = "download";
     sendState({ status: "downloading", percent: 0, transferred: 0, total: 0, message: "" });
     try {
       await autoUpdater.downloadUpdate();
     } catch (error) {
       fail(error);
+    } finally {
+      await finishOperation();
     }
     return state;
   };
@@ -84,12 +119,13 @@ export function createUpdateManager({ app, ipcMain, isDevelopment, getWindow, be
 
   autoUpdater.autoDownload = false;
   autoUpdater.autoInstallOnAppQuit = false;
-  autoUpdater.allowPrerelease = true;
+  autoUpdater.allowPrerelease = false;
+  autoUpdater.allowDowngrade = false;
   autoUpdater.on("checking-for-update", () =>
-    sendState({ status: "checking", message: "" }),
+    acceptsEvent() && sendState({ status: "checking", message: "" }),
   );
   autoUpdater.on("update-available", (info) =>
-    sendState({
+    acceptsEvent() && sendState({
       status: "available",
       availableVersion: info.version || "",
       checkedAt: new Date().toISOString(),
@@ -97,7 +133,7 @@ export function createUpdateManager({ app, ipcMain, isDevelopment, getWindow, be
     }),
   );
   autoUpdater.on("update-not-available", () =>
-    sendState({
+    acceptsEvent() && sendState({
       status: "not-available",
       availableVersion: "",
       checkedAt: new Date().toISOString(),
@@ -105,29 +141,37 @@ export function createUpdateManager({ app, ipcMain, isDevelopment, getWindow, be
     }),
   );
   autoUpdater.on("download-progress", (progress) =>
-    sendState({
+    acceptsEvent() && sendState({
       status: "downloading",
       percent: Number.isFinite(progress.percent) ? progress.percent : 0,
       transferred: Number.isFinite(progress.transferred) ? progress.transferred : 0,
       total: Number.isFinite(progress.total) ? progress.total : 0,
     }),
   );
-  autoUpdater.on("update-downloaded", (info) =>
+  autoUpdater.on("update-downloaded", (info) => {
+    if (!acceptsEvent()) return;
+    downloadedChannel = operationChannel;
     sendState({
       status: "downloaded",
       availableVersion: info.version || state.availableVersion,
       percent: 100,
       checkedAt: new Date().toISOString(),
       message: "",
-    }),
-  );
+    });
+  });
   autoUpdater.on("error", fail);
 
   ipcMain.handle("desktop:get-update-state", () => state);
   ipcMain.handle("desktop:set-update-preferences", (event, value) => {
     if (event.sender !== getWindow()?.webContents) return state;
-    preferences = normalizeUpdatePreferences(value);
-    autoUpdater.allowPrerelease = preferences.channel === "preview";
+    const next = normalizeUpdatePreferences(value);
+    const channelChanged = next.channel !== preferences.channel;
+    preferences = next;
+    if (channelChanged) {
+      resetCandidate();
+      if (operation) queuedCheck = true;
+      else void checkForUpdates(true);
+    }
     scheduleChecks();
     return state;
   });
@@ -140,10 +184,16 @@ export function createUpdateManager({ app, ipcMain, isDevelopment, getWindow, be
     return downloadUpdate();
   });
   ipcMain.handle("desktop:install-update", (event) => {
-    if (event.sender !== getWindow()?.webContents || state.status !== "downloaded")
+    if (event.sender !== getWindow()?.webContents || operation ||
+        state.status !== "downloaded" || downloadedChannel !== preferences.channel)
       return false;
-    beforeInstall();
-    setImmediate(() => autoUpdater.quitAndInstall(false, true));
+    const version = state.availableVersion;
+    setImmediate(() => {
+      if (operation || state.status !== "downloaded" ||
+          downloadedChannel !== preferences.channel || state.availableVersion !== version) return;
+      beforeInstall();
+      autoUpdater.quitAndInstall(false, true);
+    });
     return true;
   });
 

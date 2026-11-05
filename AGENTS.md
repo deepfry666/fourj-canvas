@@ -86,7 +86,7 @@
 - 按当前版本号提升一个版本，更新根目录 `VERSION`。
 - 将当前未提交的代码全部提交到 Git。
 - 提交完成后，给当前提交打最新版本号对应的 tag，例如 `v0.0.5`。
-- 源码、桌面安装包、自动更新清单和 GitHub Release 统一维护于 `https://github.com/deepfry666/infinite-canvas-desktop-releases`；原私有源码库只保留历史备份，不再作为新开发入口。旧发行标签和安装包不可覆盖，历史源码基线见 `SOURCE_SNAPSHOT.json` 和 `OPEN_SOURCE.md`。
+- 源码、桌面安装包、自动更新清单和 GitHub Release 统一维护于 `https://github.com/deepfry666/fourj-canvas`；原私有源码库只保留历史备份，不再作为新开发入口。旧发行标签和安装包不可覆盖，历史源码基线见 `SOURCE_SNAPSHOT.json` 和 `OPEN_SOURCE.md`。
 - 每次 GitHub Release 必须在 Release 正文写入本次用户可感知变更的更新日志，并同时上传安装包、更新清单和差分文件；用户确认安装前要有通知，升级后新版本首次健康启动要有完成通知。
 - 每次发版都要在 GitHub Release 正文顶部提供简短中文更新说明，控制在 3–6 条、每条一句，优先描述用户可直接感知的变化，不照搬实现细节或完整 `CHANGELOG.md`。
 - 发版本流程中不要执行编译、测试或构建，除非用户明确要求。

@@ -8,9 +8,9 @@
 
 ## 下载与使用
 
-- [稳定版 v0.1.10](https://github.com/deepfry666/infinite-canvas-desktop-releases/releases/tag/v0.1.10)
-- [测试版 v0.1.11-beta.4](https://github.com/deepfry666/infinite-canvas-desktop-releases/releases/tag/v0.1.11-beta.4)
-- [全部版本与校验文件](https://github.com/deepfry666/infinite-canvas-desktop-releases/releases)
+- [稳定版 v0.1.10](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.10)
+- [测试版 v0.1.11-beta.4](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.11-beta.4)
+- [全部版本与校验文件](https://github.com/deepfry666/fourj-canvas/releases)
 
 当前公开安装包面向 Windows x64，尚未进行 Windows 代码签名。请确认来源并核对校验值；模型由使用者自行配置，调用费用由对应服务商收取。
 
@@ -21,7 +21,7 @@
 使用 Node.js 24 LTS（验证版本见 `.node-version`）；原有测试使用 Node 24 的 TypeScript 转换能力，不支持移除了该实验参数的 Node 26。若使用 fnm，可在进入项目后运行 `fnm use --install-if-missing`。
 
 ```bash
-git clone https://github.com/deepfry666/infinite-canvas-desktop-releases.git FourJ-Canvas
+git clone https://github.com/deepfry666/fourj-canvas.git FourJ-Canvas
 cd FourJ-Canvas
 npm ci
 npm --prefix web ci --legacy-peer-deps

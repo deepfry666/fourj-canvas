@@ -119,3 +119,5 @@ The current release needs manual verification in these areas:
 - Beta9 legacy runtime restoration: when `appData/infinite-canvas-desktop` contains the older Chromium profile, the first Beta9 launch backs up the current `appData/无限画布` storage to `profile-backups/before-legacy-runtime-restore` and then restores Local Storage, IndexedDB, Session Storage, and WebStorage once. Existing proxy API settings and local content should reappear without reading or logging key contents, and later launches must not overwrite the restored profile again.
 
 The Chinese version contains the complete item-by-item acceptance checklist.
+
+- Repository consolidation: verify installed clients follow the legacy release URL redirect; verify stable/preview switching, in-flight downloads, stale-package rejection, and preserved workspace/settings.

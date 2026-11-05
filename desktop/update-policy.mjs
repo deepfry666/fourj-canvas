@@ -1,7 +1,7 @@
 export function normalizeUpdatePreferences(value = {}) {
   return {
     autoCheck: value.autoCheck === false ? false : true,
-    channel: value.channel === "stable" ? "stable" : "preview",
+    channel: value.channel === "preview" ? "preview" : "stable",
   };
 }
 

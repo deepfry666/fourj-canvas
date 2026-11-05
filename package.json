@@ -23,7 +23,7 @@
     "desktop:dist:mac:x64": "npm run web:build && electron-builder --mac --x64 --config.directories.output=release/macos/x64",
     "desktop:dist:mac:universal": "npm run web:build && electron-builder --mac --universal --config.directories.output=release/macos/universal",
     "icons:generate": "node scripts/generate-icons.mjs",
-    "test": "node --test desktop/creative-skill-store.test.mjs desktop/workspace-path.test.mjs desktop/workspace-store.test.mjs desktop/workspace-migration.test.mjs desktop/runtime-profile-migration.test.mjs desktop/window-close-policy.test.mjs desktop/update-policy.test.mjs desktop/update-cache.test.mjs && node --experimental-transform-types --test web/src/hooks/use-pointer-halo.test.ts web/src/lib/agent/builtin-agent-conversations.test.ts web/src/lib/app-shell-state.test.ts web/src/lib/app-sync-manifest.test.ts web/src/lib/asset-library.test.ts web/src/lib/asset-package-manifest.test.ts web/src/lib/canvas/create-menu-layout.test.ts web/src/lib/canvas/creative-skill-materialization.test.ts web/src/lib/canvas/debounced-writer.test.ts web/src/lib/canvas/floating-toolbar-layout.test.ts web/src/lib/canvas/generation-runtime.test.ts web/src/lib/canvas/wheel-routing.test.ts web/src/lib/creative-history.test.ts web/src/lib/creative-skill-run-ledger.test.ts web/src/lib/creative-skill-runner.test.ts web/src/lib/creative-skills/canvas-runtime-request.test.ts web/src/lib/creative-skills/chat-execution.test.ts web/src/lib/creative-skills/compiler.test.ts web/src/lib/creative-skills/draft-sources.test.ts web/src/lib/creative-skills/schema.test.ts web/src/lib/creative-skills/style-extraction.test.ts web/src/lib/generation-log-merge.test.ts web/src/lib/generation-log-operation.test.ts web/src/lib/generation-trash.test.ts web/src/lib/image-generation-log-lifecycle.test.ts web/src/lib/model-onboarding.test.ts web/src/lib/prompt-tags.test.ts web/src/lib/route-transition-history.test.ts web/src/lib/view-transition-ownership.test.ts web/src/pages/home/home-brand-motion.test.ts web/src/services/asset-storage-cleanup.test.ts web/src/services/creative-skill-library.test.ts web/src/services/creative-skill-run-storage.test.ts web/src/services/provider/provider-error.test.ts web/src/stores/use-agent-store.test.ts web/src/stores/use-image-workbench-store.test.ts",
+    "test": "node --test desktop/creative-skill-store.test.mjs desktop/workspace-path.test.mjs desktop/workspace-store.test.mjs desktop/workspace-migration.test.mjs desktop/runtime-profile-migration.test.mjs desktop/window-close-policy.test.mjs desktop/update-policy.test.mjs desktop/update-manager.test.mjs desktop/update-cache.test.mjs && node --experimental-transform-types --test web/src/hooks/use-pointer-halo.test.ts web/src/lib/agent/builtin-agent-conversations.test.ts web/src/lib/app-shell-state.test.ts web/src/lib/app-sync-manifest.test.ts web/src/lib/asset-library.test.ts web/src/lib/asset-package-manifest.test.ts web/src/lib/canvas/create-menu-layout.test.ts web/src/lib/canvas/creative-skill-materialization.test.ts web/src/lib/canvas/debounced-writer.test.ts web/src/lib/canvas/floating-toolbar-layout.test.ts web/src/lib/canvas/generation-runtime.test.ts web/src/lib/canvas/wheel-routing.test.ts web/src/lib/creative-history.test.ts web/src/lib/creative-skill-run-ledger.test.ts web/src/lib/creative-skill-runner.test.ts web/src/lib/creative-skills/canvas-runtime-request.test.ts web/src/lib/creative-skills/chat-execution.test.ts web/src/lib/creative-skills/compiler.test.ts web/src/lib/creative-skills/draft-sources.test.ts web/src/lib/creative-skills/schema.test.ts web/src/lib/creative-skills/style-extraction.test.ts web/src/lib/generation-log-merge.test.ts web/src/lib/generation-log-operation.test.ts web/src/lib/generation-trash.test.ts web/src/lib/image-generation-log-lifecycle.test.ts web/src/lib/model-onboarding.test.ts web/src/lib/prompt-tags.test.ts web/src/lib/route-transition-history.test.ts web/src/lib/view-transition-ownership.test.ts web/src/pages/home/home-brand-motion.test.ts web/src/services/asset-storage-cleanup.test.ts web/src/services/creative-skill-library.test.ts web/src/services/creative-skill-run-storage.test.ts web/src/services/provider/provider-error.test.ts web/src/stores/use-agent-store.test.ts web/src/stores/use-image-workbench-store.test.ts",
     "check": "npm run web:typecheck && npm run web:build"
   },
   "devDependencies": {
@@ -65,8 +65,8 @@
     "publish": {
       "provider": "github",
       "owner": "deepfry666",
-      "repo": "infinite-canvas-desktop-releases",
-      "releaseType": "prerelease"
+      "repo": "fourj-canvas",
+      "releaseType": "draft"
     },
     "win": {
       "target": [
@@ -119,7 +119,7 @@
     "electron-updater": "^6.8.9",
     "fflate": "^0.8.3"
   },
-  "repository": "https://github.com/deepfry666/infinite-canvas-desktop-releases",
+  "repository": "https://github.com/deepfry666/fourj-canvas",
   "engines": {
     "node": ">=24.0.0 <25"
   }

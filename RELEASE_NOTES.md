@@ -4,7 +4,7 @@
 
 ## 稳定版
 
-- 当前版本：[`v0.1.10`](https://github.com/deepfry666/infinite-canvas-desktop-releases/releases/tag/v0.1.10)
+- 当前版本：[`v0.1.10`](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.10)
 - 安装包：`FourJCanvas-0.1.10-x64.exe`
 - SHA-256：`a3816c1447b241a390f51cbf4a11049802d86ea052d30d19645c7c7ca36681fc`
 
@@ -12,7 +12,7 @@
 
 ## 测试版
 
-- 当前通道版本：[`v0.1.11-beta.4`](https://github.com/deepfry666/infinite-canvas-desktop-releases/releases/tag/v0.1.11-beta.4)
+- 当前通道版本：[`v0.1.11-beta.4`](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.11-beta.4)
 - 安装包：`FourJCanvas-0.1.11-beta.4-x64.exe`
 - SHA-256：`1432a3719a7d9e9fe1389e0024b353dbc3147a15fac4b2a7efadabb44f3026a0`
 
@@ -21,7 +21,7 @@
 ## 更多信息
 
 - [软件功能、快速开始与数据说明](README.md)
-- [全部版本与更新说明](https://github.com/deepfry666/infinite-canvas-desktop-releases/releases)
+- [全部版本与更新说明](https://github.com/deepfry666/fourj-canvas/releases)
 - [当前安装包校验清单](SHA256SUMS.txt)
 
 当前公开安装包仅适用于 Windows x64，且尚未进行 Windows 代码签名。SHA-256 只能校验文件完整性，不能替代代码签名或证明发布者身份。

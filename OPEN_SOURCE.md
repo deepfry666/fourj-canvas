@@ -2,7 +2,7 @@
 
 ## 唯一维护入口
 
-[infinite-canvas-desktop-releases](https://github.com/deepfry666/infinite-canvas-desktop-releases) 同时维护四季画布源码、安装包、更新清单与版本说明，保持原发行地址不变。
+[fourj-canvas](https://github.com/deepfry666/fourj-canvas) 同时维护四季画布源码、安装包、更新清单与版本说明，仓库已由 `infinite-canvas-desktop-releases` 改名；旧地址由 GitHub 重定向，禁止重新创建同名仓库而截断旧客户端更新。
 
 此次公开快照基于已发布测试版 `v0.1.11-beta.4` 对应的源码，而不是旧源码库的默认 `main`；完整提交标识见 `SOURCE_SNAPSHOT.json`。它不是新软件版本，没有提升版本号、打新标签或发布新安装包。
 
@@ -25,7 +25,7 @@
 开发环境采用 Node.js 24 LTS，具体版本见 `.node-version`。支持 fnm 的环境可先运行 `fnm use --install-if-missing`；不要使用 Node 26 运行仍依赖 `--experimental-transform-types` 的既有测试。
 
 ```bash
-git clone https://github.com/deepfry666/infinite-canvas-desktop-releases.git FourJ-Canvas
+git clone https://github.com/deepfry666/fourj-canvas.git FourJ-Canvas
 cd FourJ-Canvas
 npm ci
 npm --prefix web ci --legacy-peer-deps
@@ -39,7 +39,7 @@ npm run desktop:dev
 
 - `appId` 继续为 `com.infinitecanvas.desktop`。
 - `userData` / `sessionData` 继续使用原 `appData/无限画布`，默认工作区名称仍为 `无限画布工作区`。
-- Electron Builder 仍向 `deepfry666/infinite-canvas-desktop-releases` 发行；稳定版/测试版通道和更新校验逻辑不变。
+- Electron Builder 仍向 `deepfry666/fourj-canvas` 发行；保留稳定版/测试版通道；新安装默认稳定版，已有明确选择保留；禁止自动降级，切换通道使旧候选包失效。
 - 不在本次仓库整理中读写真实用户工作区、迁移数据或调用任何 AI 服务。
 
 ## 检查与后续发行
@@ -52,4 +52,4 @@ npm run web:build
 
 这些是源码和渲染层检查，不等于已经运行 Windows 安装包。当前产品自动更新仅支持 Windows；安装、双更新通道、升级后配置/工作区保留及打包字体表现仍需在 Windows 上实机验收。没有真实模型抽样，不将离线测试描述为模型质量验证。
 
-已有安装包仍包含当时的许可文件和资源。本次根 MIT 文件说明的是当前公开源码；没有覆盖历史包或把它们伪装成本次构建产物。后续发行须按 `AGENTS.md` 再次取得当次发版授权，并使用新的版本号。
+已有安装包仍包含当时的许可文件和资源。本次根 MIT 文件说明的是当前公开源码；没有覆盖历史包或把它们伪装成本次构建产物。后续安装包使用新版本号，版本标签指向对应公开源码提交。

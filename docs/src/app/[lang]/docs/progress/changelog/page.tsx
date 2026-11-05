@@ -11,7 +11,7 @@ const messages = {
   en: {
     title: 'Changelog',
     description: 'Project release history',
-    content: '# Changelog\n\nThe detailed changelog is currently maintained in Chinese. Published desktop releases are available from the [FourJ Canvas release page](https://github.com/deepfry666/infinite-canvas-desktop-releases/releases).',
+    content: '# Changelog\n\nThe detailed changelog is currently maintained in Chinese. Published desktop releases are available from the [FourJ Canvas release page](https://github.com/deepfry666/fourj-canvas/releases).',
   },
   'zh-CN': {
     title: '更新日志',

@@ -1,31 +1,80 @@
 ---
 title: 快速开始
-description: 安装或开发运行四季画布桌面应用
+description: 下载、校验并配置四季画布，开始第一次桌面创作
 ---
 
 # 快速开始
 
-四季画布是纯桌面应用。当前公开发行物只有 Windows x64 安装包，不提供 Vercel、Render、Docker 或其他网页端部署。
+四季画布是本地优先的 Electron 桌面应用。当前公开发行物只有 Windows x64 安装包；不提供主应用网页端、Vercel、Render 或 Docker 发行方式。
 
-## 安装稳定版
+## 1. 选择版本并下载安装包
 
-从 [四季画布发行仓库](https://github.com/deepfry666/fourj-canvas/releases) 下载最新稳定版安装包。首次启动后，在「设置」中添加自己的 AI 渠道、API Key 和模型，再确认本地工作区位置。
+- [稳定版 v0.1.10](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.10)：优先使用正式发布版本。
+- [测试版 v0.1.11-beta.4](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.11-beta.4)：包含创作 Skill 等新能力，适合愿意参与测试的用户。
+- [全部版本](https://github.com/deepfry666/fourj-canvas/releases)：查看每版更新说明与资产。
 
-## 本地开发
+展开对应 Release 的 Assets，下载 `FourJCanvas-版本号-x64.exe`。`latest.yml` 和 `.blockmap` 供更新机制使用，不是需要手动运行的安装程序；GitHub 的 Source code 压缩包是源码，不是安装版。
+
+### 安装前校验
+
+在 PowerShell 中执行，文件名替换为实际下载的安装包：
+
+```powershell
+Get-FileHash ".\FourJCanvas-0.1.11-beta.4-x64.exe" -Algorithm SHA256
+```
+
+把结果与**同一版本 Release** 的校验值逐字比较：v0.1.10 在发布正文提供 SHA-256；v0.1.11-beta.4 提供 `SHA256SUMS-beta4.txt`。不要使用仓库根目录或其他版本的校验值代替。
+
+安装包尚未进行 Windows 代码签名。出现 SmartScreen 警告时先确认下载来源、文件名和校验值；来源或校验不符时不要运行。校验只能帮助确认文件一致性，不能代替代码签名或安全审查。
+
+## 2. 配置 AI 服务与工作区
+
+打开「设置」：
+
+1. 添加自己的 AI 渠道，填写服务商提供的 Base URL 和 API Key。
+2. 拉取模型列表，或按服务商文档手动填写模型名，并为图片、视频或文字用途选择相应模型。
+3. 确认本地工作区位置。普通用户使用安装版无需额外安装 Node.js、Codex、MCP 或 Docker。
+
+不同服务商的接口和模型能力不完全相同。出现模型列表 404、参数不支持或生成失败时，先核对服务商文档、模型用途、接口地址、余额与权限，不要把“OpenAI 兼容”理解成所有能力都相同。高级渠道适配说明见[桌面开发说明](../../../../desktop/README.md)。
+
+## 3. 完成第一次创作
+
+建议先从图片工作台开始：
+
+1. 输入一个简单提示词，例如“白色背景上的一只陶瓷杯，柔和自然光，产品摄影”。
+2. 选择已配置的图片模型，把生成数量设为 1，确认尺寸和费用后再开始。
+3. 如需参考图，添加自己有权使用的图片，并确认该模型支持参考图输入。
+4. 生成后查看结果与历史记录，下载或加入“我的素材”。重要作品请确认已保存到本地，不要只依赖远程结果 URL。
+
+想组织多轮创作时，新建画布，把提示词与参考图作为节点，再通过连线组织输入。画布内置「对话」可帮助润色提示词并提出画布操作；首次使用建议采用手动确认，检查目标、输入和生成数量后再执行。
+
+继续阅读：[功能介绍](features.zh-CN.mdx) · [画布节点](../canvas/canvas-node-manual.zh-CN.mdx) · [快捷键](../canvas/canvas-shortcuts.zh-CN.mdx)。
+
+## 更新与平台边界
+
+- 稳定版与测试版是独立更新通道；稳定版通道不会自动安装预发布版本。切换通道不等于可以任意降级。
+- 重要工作区应独立备份，尤其是在试用测试版或迁移设备前。
+- 源码包含 macOS 打包脚本，但当前没有正式公开的 Mac 安装版。平台打包、更新及工作区保留等实机验收状态见[待验证事项](../progress/pending-test.zh-CN.mdx)。
+
+## 数据与费用
+
+- 软件源码开源不等于模型调用免费。图片、视频和对话均可能产生服务商费用；重试或批量调用前先检查已有任务状态，避免重复提交。
+- API Key 保存在桌面应用本地配置中。Electron 渲染层直接请求所配置的 AI 接口，提示词与使用的参考素材会传给对应服务商；调用不经过项目后端转发。
+- 画布、素材与生成记录以本机工作区为权威存储。可选 WebDAV 会向你配置的服务器同步内容，是同步方式而非独立备份。
+- 设置导出可能包含 API Key 和 WebDAV 凭据，不要公开上传或直接分享。只安装可信来源的远程节点插件，其代码可以访问页面数据和本地 Key。更多边界见[安全说明](../../../../SECURITY.md)。
+
+## 从源码开发
+
+使用 Node.js 24 LTS，具体版本见根目录 `.node-version`。在终端执行：
 
 ```bash
-npm run setup
+git clone https://github.com/deepfry666/fourj-canvas.git FourJ-Canvas
+cd FourJ-Canvas
+npm ci
+npm --prefix web ci --legacy-peer-deps
 npm run desktop:dev
 ```
 
-`web/` 只是 Electron 使用的 React 渲染层。开发命令会临时启动 Vite 本地服务供 Electron 加载；正式安装包直接加载随包构建的本地文件，不需要浏览器或网络站点。
+`web/` 是 Electron 的 React 渲染层。开发命令临时启动 Vite 本地服务供 Electron 加载；正式安装包加载随包构建的本地文件。浏览器预览仅用于源码调试，不是网页产品。
 
-## 使用建议
-
-- 在设置中填写自己的 `Base URL`、`API Key` 和模型名。
-- 画布、素材与生成记录默认保存在本机工作区；需要跨设备同步时可自行配置 WebDAV。
-- API Key 保存在桌面应用的本地配置中，由桌面渲染层直接请求用户配置的兼容接口。
-
-## 说明
-
-- 浏览器中的 Vite 页面仅用于源码开发和调试，不是网页产品，也不作为发行目标。
+常用源码检查为 `npm test`、`npm run web:typecheck` 和 `npm run web:build`；这些检查不等同于 Windows 安装包或真实模型调用验证。

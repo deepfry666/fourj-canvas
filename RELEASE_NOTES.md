@@ -1,27 +1,19 @@
 # 四季画布 FourJ Canvas 版本说明
 
-本文件记录当前公开更新通道。每个版本的完整变化、安装资产和发布时间以对应的 GitHub Release 为准。
+当前只保留正式版更新。完整历史变化与安装资产见 [GitHub Releases](https://github.com/deepfry666/fourj-canvas/releases)，历史测试版保留归档，不作为当前更新通道。
 
-## 稳定版
+## 当前正式版 v0.1.11
 
-- 当前版本：[`v0.1.10`](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.10)
-- 安装包：`FourJCanvas-0.1.10-x64.exe`
-- SHA-256：`a3816c1447b241a390f51cbf4a11049802d86ea052d30d19645c7c7ca36681fc`
+- [正式 Release](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.11)
+- 安装包：`FourJCanvas-0.1.11-x64.exe`
+- SHA-256：`39a4d1a164af4f3bc718b18347bdaf9f6ad600895dbbacd4ce06bcd9573de47c`
 
-本版本从已完成测试的候选版本重新构建，应用内版本、安装包文件名和自动更新清单均已统一为 `v0.1.10`。
+- 新增硅基流动内置图片模板，支持文生图与参考图改图，无需手写 JSON。
+- Qwen 改图支持专用编辑模型，Image-Edit-2509 最多可使用三张参考图，并提供模型选错和数量超限提示。
+- 当前只提供正式版更新，旧测试设置自动归入正式通道，保留原有配置和工作区。
+- 修复部分图片响应格式和远程下载失败导致的生成结果误报，已生成的远程图片仍可显示。
+- 正式提供创作 Skill 的创建、试跑、发布及画布执行流程，源码与安装包统一在当前仓库维护。
 
-## 测试版
+发布文件同时提供 `latest.yml`、安装包 `.blockmap` 和 `SHA256SUMS.txt`。版本号、包内资源和更新清单已核对；真实 API 与 Windows 安装后运行状态仍见[待测试事项](docs/content/docs/progress/pending-test.zh-CN.mdx)。
 
-- 当前通道版本：[`v0.1.11-beta.4`](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.11-beta.4)
-- 安装包：`FourJCanvas-0.1.11-beta.4-x64.exe`
-- SHA-256：`1432a3719a7d9e9fe1389e0024b353dbc3147a15fac4b2a7efadabb44f3026a0`
-
-该测试版修复 CPA 返回远程图片地址但桌面下载失败时被误报为生成失败的问题，并继续兼容图片 URL 数组、图片对象和 `image_url` / `imageUrl` 字段。
-
-## 更多信息
-
-- [软件功能、快速开始与数据说明](README.md)
-- [全部版本与更新说明](https://github.com/deepfry666/fourj-canvas/releases)
-- [当前安装包校验清单](SHA256SUMS.txt)
-
-当前公开安装包仅适用于 Windows x64，且尚未进行 Windows 代码签名。SHA-256 只能校验文件完整性，不能替代代码签名或证明发布者身份。
+当前公开安装包仅适用于 Windows x64，尚未进行 Windows 代码签名；文件哈希用于校验完整性。

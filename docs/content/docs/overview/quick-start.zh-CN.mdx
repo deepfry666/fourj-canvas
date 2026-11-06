@@ -19,10 +19,10 @@ description: 下载、校验并配置四季画布，开始第一次桌面创作
 在 PowerShell 中执行，文件名替换为实际下载的安装包：
 
 ```powershell
-Get-FileHash ".\FourJCanvas-0.1.11-beta.4-x64.exe" -Algorithm SHA256
+Get-FileHash ".\FourJCanvas-0.1.11-x64.exe" -Algorithm SHA256
 ```
 
-把结果与**同一版本 Release** 的校验值逐字比较：v0.1.10 在发布正文提供 SHA-256；v0.1.11-beta.4 提供 `SHA256SUMS-beta4.txt`。不要使用仓库根目录或其他版本的校验值代替。
+把结果与**同一版本 Release** 附带的 `SHA256SUMS.txt` 校验值逐字比较。不要使用其他版本的校验值代替。
 
 安装包尚未进行 Windows 代码签名。出现 SmartScreen 警告时先确认下载来源、文件名和校验值；来源或校验不符时不要运行。校验只能帮助确认文件一致性，不能代替代码签名或安全审查。
 

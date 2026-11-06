@@ -69,7 +69,7 @@ export type AiConfig = {
     canvasImageCount: string;
     desktopCloseBehavior: "tray" | "quit";
     desktopAutoUpdate: boolean;
-    desktopUpdateChannel: "stable" | "preview";
+    desktopUpdateChannel: "stable";
 };
 
 export type WebdavSyncConfig = {
@@ -307,7 +307,7 @@ export const useConfigStore = create<ConfigStore>()(
                         canvasImageCount: config.canvasImageCount || "3",
                         desktopCloseBehavior: config.desktopCloseBehavior === "quit" ? "quit" : "tray",
                         desktopAutoUpdate: config.desktopAutoUpdate !== false,
-                        desktopUpdateChannel: config.desktopUpdateChannel === "preview" ? "preview" : "stable",
+                        desktopUpdateChannel: "stable",
                     },
                 };
             },

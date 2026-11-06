@@ -6,7 +6,7 @@ import { apimartImagePolicy, apimartModelCapability, isApimartConfig } from "@/l
 import { createProviderRegistry } from "@/services/provider/registry";
 import { createProviderHttpError, withProviderErrorMessage } from "@/services/provider/provider-error";
 import type { ProviderProfile } from "@/services/provider/types";
-import { APIMART_GPT_IMAGE_PRESET } from "@/services/provider/presets";
+import { APIMART_GPT_IMAGE_PRESET, SILICONFLOW_PRESET } from "@/services/provider/presets";
 import { normalizePluginImages, runModelPlugin } from "./model-plugin";
 import { nanoid } from "nanoid";
 import { dataUrlToFile } from "@/lib/image-utils";
@@ -56,7 +56,7 @@ function providerImageOptions(config: AiConfig, count: number, requestSize?: str
 }
 
 function usesProviderRegistry(adapter: ReturnType<typeof resolveModelAdapter>, task: "image" | "text", config?: AiConfig) {
-    return adapter.mode === "declarative" || (task === "image" && (adapter.preset === APIMART_GPT_IMAGE_PRESET || Boolean(config && isApimartConfig(config))));
+    return adapter.mode === "declarative" || (adapter.mode === "preset" && task === "image" && (adapter.preset === SILICONFLOW_PRESET || adapter.preset === APIMART_GPT_IMAGE_PRESET || Boolean(config && isApimartConfig(config))));
 }
 
 function providerImages(result: unknown) {
@@ -811,7 +811,7 @@ export async function requestGeneration(config: AiConfig, prompt: string, option
     if (usesProviderRegistry(adapter, "image", requestConfig)) {
         const apimart = isApimartConfig(requestConfig);
         const quality = normalizeQuality(config.quality);
-        const requestSize = apimart ? undefined : resolveRequestSize(quality, config.size);
+        const requestSize = apimart || adapter.preset === SILICONFLOW_PRESET ? undefined : resolveRequestSize(quality, config.size);
         const result = await providerRegistry.execute(providerProfile(requestConfig, requestConfig.model, adapter, config.model || config.imageModel), {
             task: "image.generate",
             model: requestConfig.model,
@@ -901,7 +901,7 @@ export async function requestEdit(config: AiConfig, prompt: string, references: 
         const policy = apimart ? apimartImagePolicy(requestConfig.model, { outputCount: n }) : undefined;
         if (!options?.resumeTaskId && policy && references.length > policy.maxReferences) throw new Error(apiText("apimartTooManyImages", { limit: policy.maxReferences }));
         const quality = normalizeQuality(config.quality);
-        const requestSize = apimart ? undefined : resolveRequestSize(quality, config.size);
+        const requestSize = apimart || adapter.preset === SILICONFLOW_PRESET ? undefined : resolveRequestSize(quality, config.size);
         const result = await providerRegistry.execute(providerProfile(requestConfig, requestConfig.model, adapter, config.model || config.imageModel), {
             task: "image.edit",
             model: requestConfig.model,

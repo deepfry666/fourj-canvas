@@ -75,7 +75,8 @@ export function createUpdateManager({ app, ipcMain, isDevelopment, getWindow, be
     operation = "check";
     operationChannel = preferences.channel;
     downloadedChannel = null;
-    autoUpdater.allowPrerelease = operationChannel === "preview";
+    autoUpdater.channel = "latest";
+    autoUpdater.allowPrerelease = false;
     autoUpdater.allowDowngrade = false;
     sendState({ status: "checking", message: "", manual });
     try {
@@ -119,6 +120,8 @@ export function createUpdateManager({ app, ipcMain, isDevelopment, getWindow, be
 
   autoUpdater.autoDownload = false;
   autoUpdater.autoInstallOnAppQuit = false;
+  // Override a legacy beta installation's inferred feed before disabling downgrades.
+  autoUpdater.channel = "latest";
   autoUpdater.allowPrerelease = false;
   autoUpdater.allowDowngrade = false;
   autoUpdater.on("checking-for-update", () =>

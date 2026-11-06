@@ -50,7 +50,7 @@ interface WindowEventMap {
 
 type DesktopUpdatePreferences = {
     autoCheck: boolean;
-    channel: "stable" | "preview";
+    channel: "stable";
 };
 
 type DesktopUpdateStatus = "idle" | "checking" | "available" | "not-available" | "downloading" | "downloaded" | "error" | "unsupported";

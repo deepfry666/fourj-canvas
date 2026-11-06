@@ -37,9 +37,9 @@ export function ClientRootInit({ children }: { children: ReactNode }) {
     useEffect(() => {
         void window.infiniteCanvasDesktop?.setUpdatePreferences({
             autoCheck: config.desktopAutoUpdate,
-            channel: config.desktopUpdateChannel,
+            channel: "stable",
         });
-    }, [config.desktopAutoUpdate, config.desktopUpdateChannel]);
+    }, [config.desktopAutoUpdate]);
 
     useEffect(() => {
         const desktop = window.infiniteCanvasDesktop;

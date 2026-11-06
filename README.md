@@ -6,7 +6,7 @@
 
 四季画布是本地优先的 AI 视觉创作桌面应用。你可以在无限画布上连接文字与参考图，也可以直接进入图片或视频工作台，生成结果后继续整理、对比与复用。
 
-[下载稳定版](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.10) · [查看测试版](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.11-beta.4) · [安装与首次创作](docs/content/docs/overview/quick-start.zh-CN.mdx) · [功能介绍](docs/content/docs/overview/features.zh-CN.mdx)
+[下载正式版](https://github.com/deepfry666/fourj-canvas/releases/latest) · [安装与首次创作](docs/content/docs/overview/quick-start.zh-CN.mdx) · [功能介绍](docs/content/docs/overview/features.zh-CN.mdx)
 
 基于 [basketikun/infinite-canvas](https://github.com/basketikun/infinite-canvas) 独立维护，不代表上游官方版本。源码采用 [MIT](LICENSE)，第三方资源遵守[各自声明](THIRD_PARTY_NOTICES.md)。
 
@@ -35,8 +35,7 @@ flowchart LR
 
 | 版本 | 适合谁 | 下载 |
 | --- | --- | --- |
-| 稳定版 v0.1.10 | 优先使用正式发布版本 | [Release 与安装包](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.10) |
-| 测试版 v0.1.11-beta.4 | 体验创作 Skill 等新能力，并接受测试版风险 | [Release 与安装包](https://github.com/deepfry666/fourj-canvas/releases/tag/v0.1.11-beta.4) |
+| 正式版 | 日常创作，接收正式发行更新 | [最新正式 Release 与安装包](https://github.com/deepfry666/fourj-canvas/releases/latest) |
 
 1. 在对应 Release 的 Assets 中下载 `FourJCanvas-…-x64.exe`，按该版本说明核对 SHA-256 后安装。安装包尚未进行 Windows 代码签名；遇到系统警告时先确认来源，不要盲目放行。
 2. 打开「设置」，配置自己的 AI 服务地址、API Key 和模型，并确认本地工作区位置。
@@ -44,7 +43,7 @@ flowchart LR
 
 安装版无需 Node.js、Docker 或外部 Agent 服务。模型调用费用由对应服务商收取，不包含免费模型额度。详细校验、首次配置与常见问题见[快速开始](docs/content/docs/overview/quick-start.zh-CN.mdx)。
 
-稳定版与测试版有独立更新通道；稳定版通道不会自动安装预发布版本。源码虽包含 macOS 构建入口，**目前没有正式公开的 Mac 安装版**。本项目是 Electron 桌面产品，`web/` 只是桌面渲染层，不是独立网页端。
+当前只保留正式版更新；旧测试通道设置会归一到正式通道，不自动降级。历史测试版标签和安装包保留为历史资料。源码虽包含 macOS 构建入口，**目前没有正式公开的 Mac 安装版**。本项目是 Electron 桌面产品，`web/` 只是桌面渲染层，不是独立网页端。
 
 ## 数据、费用与安全
 

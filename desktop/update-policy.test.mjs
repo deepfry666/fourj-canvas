@@ -24,9 +24,9 @@ test("更新偏好只接受明确的关闭与稳定通道", () => {
   );
 });
 
-test("保留用户主动选择的测试通道", () => {
+test("旧测试通道设置统一迁移到正式通道", () => {
   assert.deepEqual(normalizeUpdatePreferences({ channel: "preview" }), {
-    autoCheck: true, channel: "preview",
+    autoCheck: true, channel: "stable",
   });
 });
 

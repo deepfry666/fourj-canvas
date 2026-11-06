@@ -607,14 +607,7 @@ export function AppConfigPanel({ showDoneButton = false, initialTab, fillHeight 
                                                             />
                                                         </Form.Item>
                                                         <Form.Item label={t("desktopUpdate.channel")} className="mb-0">
-                                                            <Select
-                                                                value={config.desktopUpdateChannel}
-                                                                options={[
-                                                                    { value: "preview", label: t("desktopUpdate.previewChannel") },
-                                                                    { value: "stable", label: t("desktopUpdate.stableChannel") },
-                                                                ]}
-                                                                onChange={(value) => updateConfig("desktopUpdateChannel", value)}
-                                                            />
+                                                            <div className="py-1.5 text-sm">{t("desktopUpdate.stableChannel")}</div>
                                                         </Form.Item>
                                                     </div>
                                                     {desktopUpdate?.status === "downloading" ? <Progress className="mt-3" percent={Math.round(desktopUpdate.percent)} size="small" /> : null}

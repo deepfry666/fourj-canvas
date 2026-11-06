@@ -71,6 +71,8 @@ Windows 中点击窗口右上角关闭默认隐藏到系统托盘，不会中断
 
 ## 中转站适配
 
+硅基流动用户可直接选择「硅基流动图片接口」内置模板；填写 `https://api.siliconflow.cn/v1` 或 `https://api.siliconflow.com/v1` 后会自动识别，无需手写 JSON。文生图和参考图编辑均调用 `/images/generations`，使用 `image_size` 与 `image` / `image2` / `image3` 原生字段，读取 `images[].url`。Qwen/Qwen-Image 用于文生图；改图选 Qwen/Qwen-Image-Edit（单图）或 Qwen/Qwen-Image-Edit-2509（最多三图），编辑模型由接口决定输出尺寸。Qwen 文生图的比例自动映射到官方推荐尺寸，显式像素尺寸原样传递，画质选项不作为 OpenAI `quality` 发送。批量生成逐次调用同步接口；模板不适配文字、视频或音频模型，其他图片模型的能力以服务商为准。接口依据：[硅基流动图片 API](https://docs.siliconflow.cn/docs/api/images-generations-post)。
+
 渠道编辑中的「请求适配方式」有两种：
 
 - 「协议预设」：继续使用 OpenAI、Gemini 或方舟的现有调用实现，也可以选择 APIMart GPT-Image-2 内置适配器。

@@ -4,6 +4,7 @@ import { apimartImagePolicy, apimartModelFamily, normalizeApimartImageResolution
 import { localizeApimartError } from "@/lib/apimart-error";
 import { dataUrlToFile } from "@/lib/image-utils";
 import { createProviderHttpError, createProviderTaskTerminalError, withProviderErrorMessage } from "./provider-error";
+import { createSiliconFlowAdapter } from "../api/siliconflow";
 
 const defaultTransport: ProviderTransport = {
     async request({ method, url, headers, body, signal }) {
@@ -315,6 +316,8 @@ export function createProviderRegistry(transport: ProviderTransport = defaultTra
     adapters[openAi.id] = openAi;
     adapters[declarative.id] = declarative;
     adapters[apimart.id] = apimart;
+    const siliconflow = createSiliconFlowAdapter(transport);
+    adapters[siliconflow.id] = siliconflow;
 
     return {
         get(profile: ProviderProfile): ProviderAdapter {

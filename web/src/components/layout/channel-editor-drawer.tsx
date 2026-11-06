@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import { defaultBaseUrlForApiFormat, guessCapability, normalizeChannelModels, type ApiCallFormat, type ChannelModel, type ChannelModelAdapterMode, type ModelCapability, type ModelChannel } from "@/stores/use-config-store";
-import { APIMART_GPT_IMAGE_PRESET, GEMINI_PRESET, OPENAI_COMPATIBLE_PRESET } from "@/services/provider/presets";
+import { APIMART_GPT_IMAGE_PRESET, GEMINI_PRESET, OPENAI_COMPATIBLE_PRESET, SILICONFLOW_PRESET } from "@/services/provider/presets";
 import { detectProviderPreset } from "@/lib/model-onboarding";
 import { ModelScriptEditor } from "./model-script-editor";
 import { ModelSelectModal } from "./model-select-modal";
@@ -33,6 +33,7 @@ export function ChannelEditorDrawer({ open, channel, onSave, onClose }: { open: 
     ];
     const adapterPresetOptions = [
         { label: t("config.channelEditor.presetOpenAi"), value: OPENAI_COMPATIBLE_PRESET, description: t("config.channelEditor.presetOpenAiDescription") },
+        { label: t("config.channelEditor.presetSiliconflow"), value: SILICONFLOW_PRESET, description: t("config.channelEditor.presetSiliconflowDescription") },
         { label: t("config.channelEditor.presetApimart"), value: APIMART_GPT_IMAGE_PRESET, description: t("config.channelEditor.presetApimartDescription") },
         { label: t("config.channelEditor.presetGemini"), value: GEMINI_PRESET, description: t("config.channelEditor.presetGeminiDescription") },
     ];
